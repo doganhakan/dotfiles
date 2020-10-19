@@ -32,6 +32,12 @@ nnoremap <silent> <F3> :NERDTreeToggle<CR>
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
 
+" disable arrow keys
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
+
 "" enable wild mode
 set wildmode=list:longest,full
 
