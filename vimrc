@@ -3,7 +3,10 @@
 ""Plugins
 call plug#begin('~/.vim/plugged')
 Plug 'vimwiki/vimwiki'
-Plug 'scrooloose/nerdtree'
+Plug 'leafgarland/typescript-vim'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'mattn/emmet-vim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 call plug#end()
 
 "" some basics
@@ -16,18 +19,7 @@ set smartcase
 set number
 "" map normal copy and paste
 vnoremap <C-c> "+y
-"" NERDTree configuration
-let g:NERDTreeChDirMode=2
-let g:NERDTreeIgnore=['\.rbc$', '\~$', '\.pyc$', '\.db$', '__pycache__']
-let g:NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$', '\.bak$', '\~$']
-let g:NERDTreeShowBookmarks=1
-let g:nerdtree_tabs_focus_on_files=1
-let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
-let g:NERDTreeWinSize = 50
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
-nnoremap <silent> <F2> :NERDTreeFind<CR>
-nmap <C-n> :NERDTreeToggle<CR>
-nnoremap <silent> <F3> :NERDTreeToggle<CR>
 " :W sudo saves the file 
 " (useful for handling the permission-denied error)
 command W w !sudo tee % > /dev/null
@@ -64,4 +56,9 @@ set tw=500
 set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
+"autocmd BufNewFile *.html 0r ~/.vim/templates/html.skel
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
+autocmd FileType xml,html,css inoremap </ </<C-x><C-o>
 
+" set spell spelllang=en_us
