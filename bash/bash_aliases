@@ -1,0 +1,9 @@
+alias set-home-monitors='xrandr --output eDP --auto --primary  --output DisplayPort-2 --mode 1920x1080 --right-of eDP'
+
+alias audio-control='pavucontrol'
+
+alias notes='vim /home/hdogan/Documents/notes/notes.md' 
+
+alias set-vm='wmname LG3D'
+
+alias sscreen='spectacle'

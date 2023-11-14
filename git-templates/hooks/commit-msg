@@ -1,0 +1,32 @@
+#!/bin/sh
+# Ask the committer for the Jira issue id this commit belongs to.
+#
+# Save this file under ~/.git-templates/hooks/commit-msg and make it executable
+
+# TODO abort if the commit message in $1 contains only white space and comments
+
+grep -qi '^Jira:' < "$1" && exit 0
+
+# Allows us to read user input
+exec < /dev/tty
+
+# if the commited branch name starts with [A-Z]+-XXXX or there is a / followed by [A-Z]+-XXXX take that as default jira issue
+# allow first commit
+branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+if [[ $? -ne 0 || -z $branch ]]; then
+    exit 0
+fi
+
+
+issue=$(sed -n 's/\(^\|.*\/\)\([A-Z]\+-[0-9]\+\)[^0-9].*/\2/p' <<< "$branch")
+
+echo "jira issue:  ${issue}"
+read -p "enter Jira issue: [$issue] " user_issue
+# do not add a Jira line if the user enters `none`
+[[ "$user_issue" = 'none' ]] && exit 0
+jira_issue=${user_issue:-$issue}
+echo "${user_issue:-$issue}"
+# do not add a Jira line if the branch does not start with ROB-XXXX and the user
+# does not give any Jira issue
+[[ -z "$jira_issue" ]] && exit 0
+echo -e "\nJira: $jira_issue" >> "$1"

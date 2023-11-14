@@ -61,4 +61,6 @@ let g:user_emmet_install_global = 0
 autocmd FileType html,css EmmetInstall
 autocmd FileType xml,html,css inoremap </ </<C-x><C-o>
 
-" set spell spelllang=en_us
+"insert date when f5 pressed
+:nnoremap <F5> "=strftime("%c")<CR>p
+:inoremap <F5> <C-R>=strftime("%c")<CR>
